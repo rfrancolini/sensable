@@ -41,13 +41,14 @@ graph_sensor <- function(x = read_sensor(),
                         sensor = c("temp", "PAR", "waves", "current")[1],
                         ...){
 
-  switch(tolower(sensor[1]),
-              "temp" = hobotemp::draw_plot(x, facet = Site),
+  gg <- switch(tolower(sensor[1]),
+              "temp" = hobotemp::draw_plot(x, facet = x$Site),
               "PAR" = "rene needs to code this",
               "waves" = "rene needs to code this too",
               "current" = "rene also needs to code this",
               stop("options for sensor are temp, PAR, waves, or current. what is ", sensor, "?")
   )
 
+  return(gg)
 
 }
