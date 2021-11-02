@@ -42,7 +42,7 @@ graph_sensor <- function(x = read_sensor(),
                         ...){
 
   gg <- switch(tolower(sensor[1]),
-              "temp" = hobotemp::draw_plot(x, facet = x$Site),
+              "temp" = hobotemp::draw_plot(x, facet = "Site"),
               "PAR" = "rene needs to code this",
               "waves" = "rene needs to code this too",
               "current" = "rene also needs to code this",
