@@ -15,15 +15,21 @@ example_filenames <- function(){
 #' @export
 #' @param filenames vector, the name of the files to be read in
 #' @param sensor character, type of sensor to be analyzed, "temp", "PAR", "waves", "current"
+#' @param raw logical, FALSE if passing QAQC'd data (default)
 #' @param ... further arguments passed to \code{\link[hobotemp]{theme}}
 #' @return tibble
 read_sensor <- function(filenames = example_filenames(),
                           sensor = c("temp", "PAR", "waves", "current")[1],
+                          raw = FALSE,
                           ...){
 
+  if (raw == FALSE){
   x <-filenames %>%
       lapply(function(i){hobotemp::read_hobotemp(i)}) %>%
-      dplyr::bind_rows()
+      dplyr::bind_rows()}
+  else {
+    x <-filenames %>%
+      dplyr::bind_rows()}
 
   return(x)
 

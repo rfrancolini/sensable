@@ -7,6 +7,7 @@
 read_sensor(
   filenames = example_filenames(),
   sensor = c("temp", "PAR", "waves", "current")[1],
+  raw = FALSE,
   ...
 )
 }
@@ -14,6 +15,8 @@ read_sensor(
 \item{filenames}{vector, the name of the files to be read in}
 
 \item{sensor}{character, type of sensor to be analyzed, "temp", "PAR", "waves", "current"}
+
+\item{raw}{logical, FALSE if passing QAQC'd data (default)}
 
 \item{...}{further arguments passed to \code{\link[hobotemp]{theme}}}
 }
