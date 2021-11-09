@@ -6,7 +6,7 @@
 \usage{
 graph_sensor(
   x = read_sensor(),
-  sensor = c("temp", "PAR", "waves", "current")[1],
+  sensor = c("temp", "par", "waves", "current")[1],
   ...
 )
 }

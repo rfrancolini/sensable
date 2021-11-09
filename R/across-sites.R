@@ -23,13 +23,24 @@ read_sensor <- function(filenames = example_filenames(),
                           raw = FALSE,
                           ...){
 
-  if (raw == FALSE){
-  x <-filenames %>%
-      lapply(function(i){hobotemp::read_hobotemp(i)}) %>%
-      dplyr::bind_rows()}
-  else {
+  if (raw == FALSE) {
     x <-filenames %>%
-      dplyr::bind_rows()}
+      lapply(function(i){readr::read_csv(i)}) %>%
+      dplyr::bind_rows()
+    }
+  else {
+  x <- switch(tolower(sensor[1]),
+             "temp" = filenames %>%
+                      lapply(function(i){hobotemp::read_hobotemp(i)}) %>%
+                      dplyr::bind_rows(),
+             "PAR" = filenames %>%
+                    lapply(function(i){parXtreem::read_parXtreem(i)}) %>%
+                    dplyr::bind_rows(),
+             "waves" = "rene needs to code this too",
+             "current" = "rene also needs to code this",
+             stop("options for sensor are temp, PAR, waves, or current. what is ", sensor, "?"))
+             }
+
 
   return(x)
 
@@ -44,12 +55,12 @@ read_sensor <- function(filenames = example_filenames(),
 #' @param ... further arguments passed to \code{\link[ggplot2]{theme}}
 #' @return ggplot
 graph_sensor <- function(x = read_sensor(),
-                        sensor = c("temp", "PAR", "waves", "current")[1],
+                        sensor = c("temp", "par", "waves", "current")[1],
                         ...){
 
   gg <- switch(tolower(sensor[1]),
               "temp" = hobotemp::draw_plot(x, facet = "Site"),
-              "PAR" = "rene needs to code this",
+              "par" = parXtreem::draw_plot(x, facet = "Site"),
               "waves" = "rene needs to code this too",
               "current" = "rene also needs to code this",
               stop("options for sensor are temp, PAR, waves, or current. what is ", sensor, "?")
