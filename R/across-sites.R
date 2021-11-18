@@ -36,8 +36,10 @@ read_sensor <- function(filenames = example_filenames(),
              "PAR" = filenames %>%
                     lapply(function(i){parXtreem::read_parXtreem(i)}) %>%
                     dplyr::bind_rows(),
-             "waves" = "rene needs to code this too",
-             "current" = "rene also needs to code this",
+             "current" =  filenames %>%
+               lapply(function(i){parXtreem::read_parXtreem(i)}) %>%
+               dplyr::bind_rows(),
+             "waves" = "only can read in QAQC'd wave height data",
              stop("options for sensor are temp, PAR, waves, or current. what is ", sensor, "?"))
              }
 
@@ -61,8 +63,8 @@ graph_sensor <- function(x = read_sensor(),
   gg <- switch(tolower(sensor[1]),
               "temp" = hobotemp::draw_plot(x, facet = "Site"),
               "par" = parXtreem::draw_plot(x, facet = "Site"),
-              "waves" = "rene needs to code this too",
-              "current" = "rene also needs to code this",
+              "current" = "currently this needs to be done through tiltometer",
+              "waves" = wavelogger::wavespec_plot(x, facet = "Site"),
               stop("options for sensor are temp, PAR, waves, or current. what is ", sensor, "?")
   )
 
